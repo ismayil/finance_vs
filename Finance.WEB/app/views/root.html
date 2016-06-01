@@ -70,7 +70,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Department</th>
-                                            <th ng-repeat="title in titleList | filter: { typeInt:630 } as titleKredit">{{title.title}}<br />{{title.description}}</th>
+                                            <th ng-repeat="title in titleList | filter: { typeInt:630 } as titleKredits"><div class="titles">{{title.title}}</div><hr /><div class="description">{{title.description}}</div></th>
                                             <th>Cəmi</th>
                                         </tr>
                                     </thead>
@@ -78,12 +78,12 @@
                                         <tr ng-repeat="value in totalValues.kredit" class="repeat-item">
                                             <td>{{$index+1}}</td>
                                             <td>{{value.departmentName}}</td>
-                                            <td ng-repeat="title in titleKredit">{{ value[title.title+'_'+title.description] }}</td>
+                                            <td ng-repeat="title in titleKredits">{{ value[(title.title+'_'+title.description).toLowerCase()] }}</td>
                                             <td>{{rightTotal('kredit',value.departmentName,dateId)}}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">Cəmi</td>
-                                            <td ng-repeat="title in titleKredit"><b>{{totalRow('kredit',(title.title+'_'+title.description).toLowerCase(),dateId) | number:2}}</b></td>
+                                            <td ng-repeat="title in titleKredits"><b>{{totalRow('kredit',(title.title+'_'+title.description).toLowerCase(),dateId) | number:2}}</b></td>
                                             <td></td>
                                         </tr>
                                     </tbody>
