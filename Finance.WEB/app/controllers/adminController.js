@@ -132,6 +132,7 @@ app.controller('adminTitleController', ['$mdDialog', 'adminService', 'valuesServ
     };
     parent.thisTitle = {};
     this.editTitle = function (title) {
+       // title.
         adminService.updateTitle(title).then(function () {
             parent.thisTitle = {};
             if (!angular.isNumber(title.index)) {
