@@ -177,3 +177,4 @@ app.controller('adminLockController', ['$mdDialog', 'adminService', function ($m
         });
     }
 }]);
+

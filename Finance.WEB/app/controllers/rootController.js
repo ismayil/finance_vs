@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('rootController', ['$scope', '$location', 'authService', 'rootService', 'valuesService','$timeout','$filter', function ($scope, $location, authService, rootService, valuesService,$timeout,$filter) {
+app.controller('rootController', ['$scope', '$location', 'authService', 'rootService', 'valuesService', '$timeout', '$filter', function ($scope, $location, authService, rootService, valuesService, $timeout, $filter) {
     var parent = this
     var auth = authService.authentication;
     $scope.dateList = [];
@@ -51,12 +51,12 @@ app.controller('rootController', ['$scope', '$location', 'authService', 'rootSer
         return ($scope.valuesDepartment === li);
     };
 
-    $scope.exportToExcel = function (tableId,sheetName) { // ex: '#my-table'
+    $scope.exportToExcel = function (tableId, sheetName) { // ex: '#my-table'
         $scope.exportHref = rootService.excelFactory.tableToExcel(tableId, sheetName);
         $timeout(function () { location.href = $scope.exportHref; }, 100); // trigger download
     };
 
-    $scope.totalRow = function (type,root ,dateId) {
+    $scope.totalRow = function (type, root, dateId) {
         var total = {};
         total[dateId] = {};
         total[dateId][root] = 0;
@@ -65,7 +65,7 @@ app.controller('rootController', ['$scope', '$location', 'authService', 'rootSer
             //console.log(total[dateId][root]);
         });
 
-        return total[dateId][root];
+        return total[dateId][root].toFixed(2 || 0);
     };
     $scope.rightTotal = function (type, department, dateId) {
         var total = {};
@@ -73,13 +73,17 @@ app.controller('rootController', ['$scope', '$location', 'authService', 'rootSer
         total[dateId][department] = 0;
         var departmentArray = $filter('filter')($scope.totalValues[type], { departmentName: department });
         angular.forEach(departmentArray, function (item) {
-            angular.forEach(item, function (val, key) {               
+            angular.forEach(item, function (val, key) {
                 if (key.toLowerCase() != 'departmentname' && key.toLowerCase() != 'dates' && angular.isNumber(val)) {
                     total[dateId][department] += val;
-                };                
+                };
             });
         });
-        return total[dateId][department];
+        return total[dateId][department].toFixed(2);
+    };
+
+    $scope.combineTitle = function (title, description) {
+        return (title + '_' + description).replace('İ', "I").toLocaleLowerCase();
     };
 
 }]);
